@@ -70,7 +70,7 @@ RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesourc
 RUN apt-get install nodejs -y
 RUN apt install npm -y
 RUN npm install -g npm
-RUN npm i -g appium@next --unsafe-perm=true --allow-root 
+RUN npm i -g appium
 RUN appium driver install uiautomator2 
 RUN exit 0 
 RUN npm cache clean 
