@@ -17,8 +17,8 @@ RUN apt update && apt install -y curl sudo wget unzip bzip2 libdrm-dev libxkbcom
 #==============================
 ARG ARCH="x86_64" 
 ARG TARGET="google_apis_playstore"  
-ARG API_LEVEL="33" 
-ARG BUILD_TOOLS="33.0.2"
+ARG API_LEVEL="31" 
+ARG BUILD_TOOLS="31.0.0"
 ARG ANDROID_ARCH=${ANDROID_ARCH_DEFAULT}
 ARG ANDROID_API_LEVEL="android-${API_LEVEL}"
 ARG ANDROID_APIS="${TARGET};${ARCH}"
@@ -61,8 +61,7 @@ RUN echo "no" | avdmanager --verbose create avd --force --name "${EMULATOR_NAME}
 #====================================
 # Install latest nodejs, npm & appium
 #====================================
-RUN curl -sL https://deb.nodesource.com/setup_18.x | bash && \
-    apt-get -qqy install nodejs && \
+RUN apt-get -qqy install nodejs && \
     npm install -g npm && \
     npm i -g appium@next --unsafe-perm=true --allow-root && \
     appium driver install uiautomator2 && \
