@@ -61,7 +61,8 @@ RUN echo "no" | avdmanager --verbose create avd --force --name "${EMULATOR_NAME}
 #====================================
 # Install latest nodejs, npm & appium
 #====================================
-RUN apt-get -qqy install nodejs && \
+RUN bash && \
+    apt-get -qqy install nodejs && \
     npm install -g npm && \
     npm i -g appium@next --unsafe-perm=true --allow-root && \
     appium driver install uiautomator2 && \
