@@ -61,23 +61,23 @@ RUN echo "no" | avdmanager --verbose create avd --force --name "${EMULATOR_NAME}
 #====================================
 # Install latest nodejs, npm & appium
 #====================================
-RUN apt-get update | bash && \
-    apt-get install -y ca-certificates curl gnupg | bash && \
-    mkdir -p /etc/apt/keyrings | bash && \
-    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg | bash && \
-    NODE_MAJOR=20 | bash && \
-    echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list | bash && \
-    apt-get update | bash && \
-    apt-get install nodejs -y | bash && \
-    npm install -g npm && \
-    npm i -g appium@next --unsafe-perm=true --allow-root && \
-    appium driver install uiautomator2 && \
-    exit 0 && \
-    npm cache clean && \
-    apt-get remove --purge -y npm && \  
-    apt-get autoremove --purge -y && \
-    apt-get clean && \
-    rm -Rf /tmp/* && rm -Rf /var/lib/apt/lists/*
+RUN apt-get update
+RUN apt-get install -y ca-certificates curl gnupg
+RUN mkdir -p /etc/apt/keyrings
+RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg 
+RUN NODE_MAJOR=20 
+RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+RUN apt-get update 
+RUN apt-get install nodejs -y
+RUN npm install -g npm
+RUN npm i -g appium@next --unsafe-perm=true --allow-root 
+RUN appium driver install uiautomator2 
+RUN exit 0 
+RUN npm cache clean 
+RUN apt-get remove --purge -y npm  
+RUN apt-get autoremove --purge -y 
+RUN apt-get clean 
+RUN rm -Rf /tmp/* && rm -Rf /var/lib/apt/lists/*
 
 
 #===================
