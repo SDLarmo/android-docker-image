@@ -61,7 +61,7 @@ RUN echo "no" | avdmanager --verbose create avd --force --name "${EMULATOR_NAME}
 #====================================
 # Install latest nodejs, npm & appium
 #====================================
-RUN bash && \
+RUN curl -sL https://deb.nodesource.com/setup_20.x | bash && \
     apt-get -qqy install nodejs && \
     npm install -g npm && \
     npm i -g appium@next --unsafe-perm=true --allow-root && \
