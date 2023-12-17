@@ -61,8 +61,14 @@ RUN echo "no" | avdmanager --verbose create avd --force --name "${EMULATOR_NAME}
 #====================================
 # Install latest nodejs, npm & appium
 #====================================
-RUN curl -sL https://deb.nodesource.com/setup_20.x | bash && \
-    apt-get -qqy install nodejs && \
+RUN apt-get update | bash && \
+    apt-get install -y ca-certificates curl gnupg | bash && \
+    mkdir -p /etc/apt/keyrings | bash && \
+    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg | bash && \
+    NODE_MAJOR=20 | bash && \
+    echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list | bash && \
+    apt-get update | bash && \
+    apt-get install nodejs -y | bash && \
     npm install -g npm && \
     npm i -g appium@next --unsafe-perm=true --allow-root && \
     appium driver install uiautomator2 && \
