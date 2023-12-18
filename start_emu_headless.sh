@@ -36,24 +36,25 @@ hw_accel_flag=$(check_hardware_acceleration)
 function launch_emulator () {
   adb devices | grep emulator | cut -f1 | xargs -I {} adb -s "{}" emu kill
   options="@${emulator_name} -no-window -no-snapshot -noaudio -no-boot-anim -memory 2048 ${hw_accel_flag} -camera-back none"
-  if [[ "$OSTYPE" == *linux* ]]; then
-    echo "${OSTYPE}: emulator ${options} -gpu off"
-    nohup emulator $options -gpu off &
-  fi
-  if [[ "$OSTYPE" == *darwin* ]] || [[ "$OSTYPE" == *macos* ]]; then
-    echo "${OSTYPE}: emulator ${options} -gpu swiftshader_indirect"
-    nohup emulator $options -gpu swiftshader_indirect &
-  fi
+  # if [[ "$OSTYPE" == *linux* ]]; then
+  #   echo "${OSTYPE}: emulator ${options} -gpu off"
+  #   nohup emulator $options -gpu off &
+  # fi
+  # if [[ "$OSTYPE" == *darwin* ]] || [[ "$OSTYPE" == *macos* ]]; then
+  #   echo "${OSTYPE}: emulator ${options} -gpu swiftshader_indirect"
+  #   nohup emulator $options -gpu swiftshader_indirect &
+  # fi
 
-  if [ $? -ne 0 ]; then
-    echo "Error launching emulator"
-    return 1
-  fi
+  # if [ $? -ne 0 ]; then
+  #   echo "Error launching emulator"
+  #   return 1
+  # fi
   # Start emulator in background
     OFFLINE=true
     echo $OFFLINE
     while [[ $OFFLINE != "" ]]
     do
+      echo "killing emu"
       adb emu kill
       nohup emulator -avd $emulator_name -no-snapshot -no-window -no-passive-gps -no-boot-anim -no-audio -accel auto -gpu auto > /dev/null 2>&1 &
       adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
