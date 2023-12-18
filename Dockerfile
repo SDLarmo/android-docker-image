@@ -61,26 +61,17 @@ RUN echo "no" | avdmanager --verbose create avd --force --name "${EMULATOR_NAME}
 #====================================
 # Install latest nodejs, npm & appium
 #====================================
-RUN apt-get update
-RUN apt-get install -y ca-certificates curl gnupg
-RUN mkdir -p /etc/apt/keyrings
-RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg 
-RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
-RUN apt remove nodejs
-RUN sudo rm -rf /usr/local/bin/node*
-RUN sudo rm -rf /usr/local/bin/npm*
-RUN sudo rm -rf /etc/apt/sources.list.d/nodesource.list
-RUN apt-get update
-RUN apt-get install nodejs -y
-RUN npm install -g npm
-RUN npm i -g appium
-RUN appium driver install uiautomator2 
-RUN exit 0 
-RUN npm cache clean 
-RUN apt-get remove --purge -y npm  
-RUN apt-get autoremove --purge -y 
-RUN apt-get clean 
-RUN rm -Rf /tmp/* && rm -Rf /var/lib/apt/lists/*
+RUN curl -sL https://deb.nodesource.com/setup_20.x | bash && \
+    apt-get -qqy install nodejs && \
+    npm install -g npm && \
+    npm i -g appium@next --unsafe-perm=true --allow-root && \
+    appium driver install uiautomator2 && \
+    exit 0 && \
+    npm cache clean && \
+    apt-get remove --purge -y npm && \  
+    apt-get autoremove --purge -y && \
+    apt-get clean && \
+    rm -Rf /tmp/* && rm -Rf /var/lib/apt/lists/*
 
 
 #===================
