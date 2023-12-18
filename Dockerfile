@@ -72,7 +72,6 @@ RUN sudo rm -rf /usr/local/bin/npm*
 RUN sudo rm -rf /etc/apt/sources.list.d/nodesource.list
 RUN apt-get update
 RUN apt-get install nodejs -y
-RUN apt-get install npm -y
 RUN npm install -g npm
 RUN npm i -g appium
 RUN appium driver install uiautomator2 
