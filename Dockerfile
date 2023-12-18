@@ -68,7 +68,7 @@ RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo 
 RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
 RUN apt-get update
 RUN apt-get install nodejs -y
-RUN apt install npm -y
+RUN apt-get install npm -y
 RUN npm install -g npm
 RUN npm i -g appium
 RUN appium driver install uiautomator2 
