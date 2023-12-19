@@ -56,9 +56,11 @@ function launch_emulator () {
     do
       echo "killing emu"
       adb emu kill
+      echo $options
       nohup emulator $options -no-passive-gps -accel auto -gpu auto > /dev/null 2>&1 &
       adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
       adb devices
+      echo "offline check"
       OFFLINE=$(grep 'offline' <<< $($ANDROID_HOME/platform-tools/adb devices))
       echo $OFFLINE
     done
