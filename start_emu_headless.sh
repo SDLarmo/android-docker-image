@@ -34,6 +34,7 @@ function check_hardware_acceleration() {
 hw_accel_flag=$(check_hardware_acceleration)
 
 function launch_emulator () {
+  egrep -c '(vmx|svm)' /proc/cpuinfo
   adb devices | grep emulator | cut -f1 | xargs -I {} adb -s "{}" emu kill
   options="@${emulator_name} -no-window -no-snapshot -noaudio -no-boot-anim -memory 2048 ${hw_accel_flag} -camera-back none"
   # if [[ "$OSTYPE" == *linux* ]]; then
